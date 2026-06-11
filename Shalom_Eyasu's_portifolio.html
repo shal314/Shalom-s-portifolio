@@ -1,0 +1,751 @@
+<!DOCTYPE html>
+
+<html class="scroll-smooth" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Shalom Eyasu | Portfolio</title>
+<meta content="Personal portfolio of Shalom Eyasu - Digital Creator, Educator, and Christian Visionary." name="description"/>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;family=Playfair+Display:ital,wght@0,600;0,700;1,600;1,700&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "tertiary-container": "#6e2c00",
+                    "inverse-on-surface": "#eaf1ff",
+                    "on-primary-fixed": "#00164e",
+                    "on-error": "#ffffff",
+                    "surface-container-highest": "#d9e3f4",
+                    "surface-container": "#e5eeff",
+                    "tertiary-fixed-dim": "#ffb691",
+                    "surface-container-lowest": "#ffffff",
+                    "on-background": "#121c28",
+                    "error": "#ba1a1a",
+                    "on-primary-container": "#90a8ff",
+                    "on-tertiary-container": "#f39461",
+                    "surface": "#f8f9ff",
+                    "surface-bright": "#f8f9ff",
+                    "on-tertiary-fixed": "#341100",
+                    "on-surface-variant": "#444651",
+                    "surface-variant": "#d9e3f4",
+                    "outline-variant": "#c5c5d3",
+                    "primary-container": "#1e3a8a",
+                    "on-secondary": "#ffffff",
+                    "inverse-primary": "#b6c4ff",
+                    "surface-container-low": "#eef4ff",
+                    "on-error-container": "#93000a",
+                    "on-tertiary-fixed-variant": "#773205",
+                    "on-secondary-fixed-variant": "#574500",
+                    "primary": "#00236f",
+                    "secondary-container": "#fed65b",
+                    "primary-fixed-dim": "#b6c4ff",
+                    "background": "#f8f9ff",
+                    "surface-tint": "#4059aa",
+                    "secondary-fixed-dim": "#e9c349",
+                    "on-surface": "#121c28",
+                    "on-primary-fixed-variant": "#264191",
+                    "tertiary": "#4b1c00",
+                    "secondary": "#735c00",
+                    "on-tertiary": "#ffffff",
+                    "surface-container-high": "#dfe9fa",
+                    "outline": "#757682",
+                    "secondary-fixed": "#ffe088",
+                    "inverse-surface": "#27313e",
+                    "primary-fixed": "#dce1ff",
+                    "error-container": "#ffdad6",
+                    "surface-dim": "#d1dbec",
+                    "accent-gold": "#fed65b"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "2xl": "1.5rem",
+                    "3xl": "2.5rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "unit": "8px",
+                    "gutter": "24px",
+                    "margin-mobile": "20px",
+                    "section-gap": "128px",
+                    "margin-desktop": "64px",
+                    "container-max": "1200px"
+            },
+            "fontFamily": {
+                    "body": ["Inter", "sans-serif"],
+                    "display": ["Playfair Display", "serif"]
+            },
+            "fontSize": {
+                "display-lg": ["clamp(2.5rem, 8vw, 7rem)", { lineHeight: "1.1", fontWeight: "700" }],
+                "display-md": ["clamp(2rem, 6vw, 4.5rem)", { lineHeight: "1.2", fontWeight: "700" }],
+            }
+          },
+        },
+      }
+    </script>
+<style>
+      :root {
+        --glass-bg: rgba(255, 255, 255, 0.5);
+        --glass-border: rgba(255, 255, 255, 0.7);
+        --glass-shadow: 0 8px 32px 0 rgba(0, 35, 111, 0.08);
+        --primary-blue: #1e3a8a;
+        --accent-gold: #eab308;
+      }
+
+      body {
+        background-color: #f8f9ff;
+        overflow-x: hidden;
+      }
+
+      .glass-card {
+        background: var(--glass-bg);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        border: 1px solid var(--glass-border);
+        box-shadow: var(--glass-shadow);
+        transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+      }
+
+      .glass-card:hover {
+        transform: translateY(-8px);
+        background: rgba(255, 255, 255, 0.7);
+        box-shadow: 0 12px 40px 0 rgba(0, 35, 111, 0.15);
+      }
+
+      #shader-canvas {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        z-index: -2;
+        pointer-events: none;
+      }
+
+      .reveal {
+        opacity: 0;
+        transform: translateY(30px);
+        transition: all 0.8s cubic-bezier(0.21, 1.02, 0.73, 1);
+      }
+
+      .reveal.active {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      .scroll-progress {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 0%;
+        height: 4px;
+        background: linear-gradient(to right, var(--primary-blue), var(--accent-gold));
+        z-index: 100;
+      }
+
+      .logo-clip {
+        clip-path: inset(0 0 5% 0);
+      }
+
+      /* Enhanced Preloader Styles */
+      #preloader {
+        position: fixed;
+        inset: 0;
+        background-color: #f8f9ff;
+        z-index: 9999;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        transition: opacity 0.8s cubic-bezier(0.645, 0.045, 0.355, 1), visibility 0.8s;
+      }
+
+      .preloader-content {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 2.5rem;
+        width: 100%;
+        max-width: 300px;
+        padding: 0 20px;
+      }
+
+      .preloader-logo-container {
+        opacity: 0;
+        transform: scale(0.5) rotate(-10deg);
+        animation: entranceLogo 1.2s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+      }
+
+      @keyframes entranceLogo {
+        0% { transform: scale(0.5) rotate(-15deg); opacity: 0; }
+        100% { transform: scale(1) rotate(0deg); opacity: 1; }
+      }
+
+      .preloader-logo {
+        width: clamp(80px, 20vw, 120px);
+        height: clamp(80px, 20vw, 120px);
+        object-fit: contain;
+        mix-blend-mode: multiply;
+        animation: pulseLogo 3s ease-in-out infinite;
+      }
+
+      @keyframes pulseLogo {
+        0%, 100% { transform: scale(1); filter: brightness(1); }
+        50% { transform: scale(1.03); filter: brightness(1.1); }
+      }
+
+      .loading-container {
+        width: 100%;
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .loading-bar-bg {
+        width: 100%;
+        height: 3px;
+        background: rgba(30, 58, 138, 0.1);
+        border-radius: 9999px;
+        overflow: hidden;
+        margin-bottom: 1rem;
+        position: relative;
+      }
+
+      .loading-bar-fill {
+        height: 100%;
+        width: 0%;
+        background: linear-gradient(to right, var(--primary-blue), var(--accent-gold));
+        transition: width 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+        box-shadow: 0 0 10px rgba(234, 179, 8, 0.3);
+      }
+
+      .loading-percent {
+        font-family: 'Inter', sans-serif;
+        font-size: 11px;
+        font-weight: 800;
+        letter-spacing: 0.25em;
+        color: var(--primary-blue);
+        text-transform: uppercase;
+      }
+
+      body.loaded {
+        overflow: auto;
+      }
+
+      body.loaded #preloader {
+        opacity: 0;
+        visibility: hidden;
+        pointer-events: none;
+      }
+    </style>
+</head>
+<body class="font-body text-on-surface">
+<!-- Preloader -->
+<div id="preloader">
+<div class="preloader-content">
+<div class="preloader-logo-container">
+<img alt="Shalom Eyasu Logo" class="preloader-logo logo-clip" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDucoegpKRnJ2F42j_YrfhgeKc-Z2MfGB9bHTR0Ob72YovDvNEl_3gU7JRlCnjAJ9b8mZaQKP3RCJHivoqtv1JZik6okXRqfF2Mf00d45A-bYNp6yxiXhc6gHXlO5saM-pytBoCXjSNSSbuFxO4LW7MBksqpCnQSy4G8JNSoh_mSIC1RVPO890SeoY-mKONdOSOUfORxx-h3M_ejIWJ7G6_RVeJI-xVp5cFNFaYIGXRxagBLObjhZ84V3krW2QJYscblLwMJP3Qyyg"/>
+</div>
+<div class="loading-container">
+<div class="loading-bar-bg">
+<div class="loading-bar-fill" id="load-fill"></div>
+</div>
+<div class="loading-percent" id="load-text">0%</div>
+</div>
+</div>
+</div>
+<!-- Scroll Progress -->
+<div class="scroll-progress" id="progress-bar"></div>
+<!-- WebGL Background -->
+<canvas id="shader-canvas"></canvas>
+<!-- Navigation -->
+<nav class="fixed top-0 w-full z-50 px-margin-mobile md:px-margin-desktop py-4 md:py-6">
+<div class="max-w-[1400px] mx-auto px-4 md:px-8 h-16 rounded-full glass-card flex justify-between items-center">
+<div class="flex items-center gap-3 md:gap-4">
+<div class="h-8 w-8 md:h-10 md:w-10 overflow-hidden flex items-center justify-center">
+<img alt="SE Logo" class="h-full w-full object-contain mix-blend-multiply opacity-90 logo-clip" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDucoegpKRnJ2F42j_YrfhgeKc-Z2MfGB9bHTR0Ob72YovDvNEl_3gU7JRlCnjAJ9b8mZaQKP3RCJHivoqtv1JZik6okXRqfF2Mf00d45A-bYNp6yxiXhc6gHXlO5saM-pytBoCXjSNSSbuFxO4LW7MBksqpCnQSy4G8JNSoh_mSIC1RVPO890SeoY-mKONdOSOUfORxx-h3M_ejIWJ7G6_RVeJI-xVp5cFNFaYIGXRxagBLObjhZ84V3krW2QJYscblLwMJP3Qyyg"/>
+</div>
+<div class="h-6 w-0.5 bg-primary/30 rounded-full"></div>
+<a class="font-display text-lg md:text-xl font-bold text-primary tracking-tighter" href="#">Shalom Eyasu</a>
+</div>
+<div class="hidden md:flex items-center gap-8 lg:gap-10">
+<a class="text-sm font-semibold uppercase tracking-widest hover:text-primary transition-colors relative group" href="#about">
+                About
+                <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary transition-all group-hover:w-full"></span>
+</a>
+<a class="text-sm font-semibold uppercase tracking-widest hover:text-primary transition-colors relative group" href="#skills">
+                Skills
+                <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary transition-all group-hover:w-full"></span>
+</a>
+<a class="text-sm font-semibold uppercase tracking-widest hover:text-primary transition-colors relative group" href="#experience">
+                Work
+                <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary transition-all group-hover:w-full"></span>
+</a>
+<a class="text-sm font-semibold uppercase tracking-widest hover:text-primary transition-colors relative group" href="#contact">
+                Contact
+                <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary transition-all group-hover:w-full"></span>
+</a>
+</div>
+<button class="md:hidden text-primary p-2 flex items-center justify-center" onclick="document.getElementById('mobile-menu').classList.toggle('hidden')">
+<span class="material-symbols-outlined">menu</span>
+</button>
+</div>
+<!-- Mobile Nav -->
+<div class="hidden mt-4 mx-auto max-w-[90vw] rounded-2xl glass-card p-6 flex flex-col gap-4 text-center md:hidden shadow-2xl" id="mobile-menu">
+<a class="font-bold uppercase tracking-widest py-2 border-b border-primary/5" href="#about" onclick="document.getElementById('mobile-menu').classList.add('hidden')">About</a>
+<a class="font-bold uppercase tracking-widest py-2 border-b border-primary/5" href="#skills" onclick="document.getElementById('mobile-menu').classList.add('hidden')">Skills</a>
+<a class="font-bold uppercase tracking-widest py-2 border-b border-primary/5" href="#experience" onclick="document.getElementById('mobile-menu').classList.add('hidden')">Work</a>
+<a class="font-bold uppercase tracking-widest py-2" href="#contact" onclick="document.getElementById('mobile-menu').classList.add('hidden')">Contact</a>
+</div>
+</nav>
+<main class="relative z-10">
+<!-- Hero Section -->
+<section class="min-h-screen flex flex-col justify-center items-center text-center px-margin-mobile md:px-margin-desktop pt-32 pb-16">
+<div class="reveal max-w-5xl w-full px-4">
+<div class="mb-8 md:mb-12 space-y-4">
+<p class="font-display text-lg md:text-2xl text-primary/80 italic leading-relaxed max-w-3xl mx-auto px-2">
+                    "በሁሉ እንገፋለን እንጂ አንጨነቅም፤ እናመነታለን እንጂ ተስፋ አንቆርጥም፤ እንሰደዳለን እንጂ አንጣልም፤ እንወድቃለን እንጂ አንጠፋም"
+                </p>
+<p class="text-[10px] md:text-xs font-bold uppercase tracking-[0.3em] text-secondary">
+                    2ኛ ወደ ቆሮንቶስ ሰዎች 4÷8-9(NIV)
+                </p>
+</div>
+<h1 class="font-display text-display-lg text-primary font-bold mb-6 md:mb-8 tracking-tighter italic">
+                Digital Creator &amp; <span class="text-transparent" style="-webkit-text-stroke: 1.5px #00236f;">Educator</span>
+</h1>
+<p class="font-display text-xl md:text-3xl text-secondary italic mb-8 md:mb-12 opacity-90">Web Developer • English Tutor • Christian Visionary</p>
+<div class="flex flex-col sm:flex-row gap-4 md:gap-6 justify-center items-center">
+<a class="w-full sm:w-auto px-10 md:px-12 py-4 md:py-5 bg-primary text-white rounded-full font-bold uppercase text-[10px] md:text-xs tracking-[0.2em] hover:scale-105 transition-all shadow-xl shadow-primary/20" href="#experience">Explore My Journey</a>
+</div>
+</div>
+<div class="absolute bottom-10 animate-bounce hidden sm:block">
+<span class="material-symbols-outlined text-primary/40 text-3xl">expand_more</span>
+</div>
+</section>
+<!-- About Me Section (The Essence) -->
+<section class="py-section-gap px-margin-mobile md:px-margin-desktop" id="about">
+<div class="max-w-[1400px] mx-auto px-4 grid lg:grid-cols-12 gap-12 lg:gap-24 items-center">
+<!-- Image Card -->
+<div class="lg:col-span-5 xl:col-span-6 reveal">
+<div class="relative group p-2 md:p-4 rounded-3xl glass-card overflow-hidden w-full">
+<img alt="Shalom Eyasu Portrait" class="w-full h-auto min-h-[300px] md:min-h-[500px] lg:h-[600px] object-cover rounded-2xl transition-all duration-1000" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAw8vPEepLyaUOiyhC0PhuTD1AG2QtHX4bju-gmaAOB0O3AujTyLDV_VFzZVv9Ma7f7TW2Wfe9vxtSls7xp3QVzV5aySPuD1pzTgjitlB0oPW6DAgCv14UHx3IY2jT50GhnX-3Vu0BFFYhTvR4ZDYQq2OWFLLydW1jID3bklxCFhkVHigViU8bxB-MDYJN8UQjql1MTlettuVN3vtE0TsmIUfVzGx-c-a_-4YcLtFKk04pg3NCLO_38rNeMZ085NFVwa4UqGDrOtZE"/>
+<div class="absolute inset-0 bg-primary/5 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none"></div>
+</div>
+</div>
+<!-- Content Grid -->
+<div class="lg:col-span-7 xl:col-span-6 reveal space-y-6 md:space-y-10">
+<div class="space-y-4">
+<h2 class="font-display text-display-md text-primary font-bold tracking-tighter">The <span class="italic text-accent-gold">Essence</span></h2>
+<div class="h-1.5 w-24 bg-accent-gold rounded-full"></div>
+</div>
+<div class="space-y-6 text-lg md:text-xl text-on-surface-variant leading-relaxed font-light">
+<p>Based in <span class="font-bold text-primary italic underline decoration-accent-gold/60 decoration-2">Dessie, Ethiopia</span>, I merge technical precision with service. <span class="font-semibold text-primary">My commitment to God</span> guides every step of my creative and professional journey.</p>
+<p>I build web experiences, craft visual stories, and empower voices worldwide as an English tutor. My life is a tapestry of code, language, and melody, dedicated to excellence.</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Why Fit Section -->
+<section class="py-section-gap px-margin-mobile md:px-margin-desktop bg-surface-container-low" id="why-fit">
+<div class="max-w-[1400px] mx-auto px-4">
+<div class="mb-12 md:mb-16 reveal text-center lg:text-left">
+<h2 class="font-display text-display-md text-primary font-bold tracking-tighter mb-4 italic">Why I’m a <span class="text-accent-gold">Great Fit</span></h2>
+<div class="h-1.5 w-24 bg-accent-gold rounded-full mx-auto lg:mx-0"></div>
+</div>
+<div class="grid lg:grid-cols-2 gap-12 lg:gap-24 items-center">
+<!-- Left: Aesthetic Grid -->
+<div class="reveal order-2 lg:order-1">
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-6">
+<!-- Point 1 -->
+<div class="p-6 md:p-8 rounded-3xl glass-card flex flex-col gap-4 group hover:bg-primary transition-all duration-500">
+<div class="w-12 h-12 rounded-2xl bg-primary/10 flex items-center justify-center text-primary group-hover:bg-accent-gold group-hover:text-primary transition-all">
+<span class="material-symbols-outlined">lyrics</span>
+</div>
+<div>
+<h4 class="font-bold text-primary group-hover:text-white uppercase tracking-widest text-xs mb-2 transition-colors">Precise Transcription &amp; Lyrics</h4>
+<p class="text-on-surface-variant group-hover:text-white/70 text-sm leading-relaxed transition-colors">I excel at transcribing with high accuracy and have a specialized talent for finding and writing lyrics.</p>
+</div>
+</div>
+<!-- Point 2 -->
+<div class="p-6 md:p-8 rounded-3xl glass-card flex flex-col gap-4 group hover:bg-primary transition-all duration-500">
+<div class="w-12 h-12 rounded-2xl bg-primary/10 flex items-center justify-center text-primary group-hover:bg-accent-gold group-hover:text-primary transition-all">
+<span class="material-symbols-outlined">volunteer_activism</span>
+</div>
+<div>
+<h4 class="font-bold text-primary group-hover:text-white uppercase tracking-widest text-xs mb-2 transition-colors">Fellowship Dedication</h4>
+<p class="text-on-surface-variant group-hover:text-white/70 text-sm leading-relaxed transition-colors">I actively engage and put consistent effort into my fellowships, serving through song, preaching, and committed community presence.</p>
+</div>
+</div>
+<!-- Point 3 -->
+<div class="p-6 md:p-8 rounded-3xl glass-card flex flex-col gap-4 group hover:bg-primary transition-all duration-500">
+<div class="w-12 h-12 rounded-2xl bg-primary/10 flex items-center justify-center text-primary group-hover:bg-accent-gold group-hover:text-primary transition-all">
+<span class="material-symbols-outlined">auto_awesome</span>
+</div>
+<div>
+<h4 class="font-bold text-primary group-hover:text-white uppercase tracking-widest text-xs mb-2 transition-colors">Creative Content &amp; Curation</h4>
+<p class="text-on-surface-variant group-hover:text-white/70 text-sm leading-relaxed transition-colors">I am highly skilled in image curation, professional writing, content creation, and strategic promotion and marketing.</p>
+</div>
+</div>
+<!-- Point 4 -->
+<div class="p-6 md:p-8 rounded-3xl glass-card flex flex-col gap-4 group hover:bg-primary transition-all duration-500">
+<div class="w-12 h-12 rounded-2xl bg-primary/10 flex items-center justify-center text-primary group-hover:bg-accent-gold group-hover:text-primary transition-all">
+<span class="material-symbols-outlined">bolt</span>
+</div>
+<div>
+<h4 class="font-bold text-primary group-hover:text-white uppercase tracking-widest text-xs mb-2 transition-colors">Technological Agility</h4>
+<p class="text-on-surface-variant group-hover:text-white/70 text-sm leading-relaxed transition-colors">I am highly adaptable to new positions and stay deeply connected and updated with the latest technological advancements and trends.</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Right: Portrait -->
+<div class="reveal order-1 lg:order-2">
+<div class="relative rounded-3xl overflow-hidden glass-card p-2 md:p-4 shadow-2xl">
+<img alt="Shalom Eyasu" class="rounded-2xl w-full aspect-square md:aspect-auto lg:aspect-square object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBttdOelizImSdcpYkKo2rGXKiKqjbxWQ3y9R3dSxUdlA6JmiyX6QgMytfYFWQ3k0gWpjEryWWKsZg7u3EmVTSKM3rEFp7r5SvM9loVrQIPVEpOWje6Q_F3TYEf9u_GIoCjtuU229B8-V_yFZmAkpCZpEfMW1INgxEtUqze2d6VeVxI6AEau7PhvgKrrlLxjZlgco1jzofPfE5w_amwXPVPkCQwGfFWxL5M76MMlZeg7WwbBQfhnkRbINPKqVxVJbpAe5HQGBvxDbw"/>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Skillset Section -->
+<section class="py-section-gap px-margin-mobile md:px-margin-desktop" id="skills">
+<div class="max-w-[1400px] mx-auto px-4">
+<div class="mb-12 md:mb-20 reveal text-center">
+<h2 class="font-display text-display-md text-primary font-bold tracking-tighter mb-4">Core <span class="italic font-normal text-secondary">Proficiencies</span></h2>
+<p class="text-on-surface-variant/70 uppercase tracking-[0.4em] text-[10px] md:text-xs font-bold px-4">A Multidisciplinary Creative Path</p>
+</div>
+<div class="grid grid-cols-1 min-[400px]:grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6 reveal">
+<div class="p-6 md:p-8 rounded-3xl glass-card flex flex-col items-center justify-center gap-4 group hover:scale-105 transition-all text-center"><span class="material-symbols-outlined text-primary text-3xl md:text-4xl group-hover:text-secondary transition-colors">audio_file</span><h4 class="font-bold text-[10px] md:text-xs uppercase tracking-widest text-primary">AUDIO TRANSCRIPTION</h4></div>
+<div class="p-6 md:p-8 rounded-3xl glass-card flex flex-col items-center justify-center gap-4 group hover:scale-105 transition-all text-center"><span class="material-symbols-outlined text-primary text-3xl md:text-4xl group-hover:text-secondary transition-colors">code</span><h4 class="font-bold text-[10px] md:text-xs uppercase tracking-widest text-primary">Website Development</h4></div>
+<div class="p-6 md:p-8 rounded-3xl glass-card flex flex-col items-center justify-center gap-4 group hover:scale-105 transition-all text-center"><span class="material-symbols-outlined text-primary text-3xl md:text-4xl group-hover:text-secondary transition-colors">video_library</span><h4 class="font-bold text-[10px] md:text-xs uppercase tracking-widest text-primary">VIDEO MARKETING AND PROMOTION</h4></div>
+<div class="p-6 md:p-8 rounded-3xl glass-card flex flex-col items-center justify-center gap-4 group hover:scale-105 transition-all text-center"><span class="material-symbols-outlined text-primary text-3xl md:text-4xl group-hover:text-secondary transition-colors">edit_note</span><h4 class="font-bold text-[10px] md:text-xs uppercase tracking-widest text-primary">Content Writing</h4></div>
+<div class="p-6 md:p-8 rounded-3xl glass-card flex flex-col items-center justify-center gap-4 group hover:scale-105 transition-all text-center"><span class="material-symbols-outlined text-primary text-3xl md:text-4xl group-hover:text-secondary transition-colors">history_edu</span><h4 class="font-bold text-[10px] md:text-xs uppercase tracking-widest text-primary">Copywriting</h4></div>
+<div class="p-6 md:p-8 rounded-3xl glass-card flex flex-col items-center justify-center gap-4 group hover:scale-105 transition-all text-center"><span class="material-symbols-outlined text-primary text-3xl md:text-4xl group-hover:text-secondary transition-colors">draw</span><h4 class="font-bold text-[10px] md:text-xs uppercase tracking-widest text-primary">Digital Design</h4></div>
+<div class="p-6 md:p-8 rounded-3xl glass-card flex flex-col items-center justify-center gap-4 group hover:scale-105 transition-all text-center"><span class="material-symbols-outlined text-primary text-3xl md:text-4xl group-hover:text-secondary transition-colors">database</span><h4 class="font-bold text-[10px] md:text-xs uppercase tracking-widest text-primary">DATA ENTRY</h4></div>
+<div class="p-6 md:p-8 rounded-3xl glass-card flex flex-col items-center justify-center gap-4 group hover:scale-105 transition-all text-center"><span class="material-symbols-outlined text-primary text-3xl md:text-4xl group-hover:text-secondary transition-colors">perm_media</span><h4 class="font-bold text-[10px] md:text-xs uppercase tracking-widest text-primary">MEDIA CURATION</h4></div>
+<div class="p-6 md:p-8 rounded-3xl glass-card flex flex-col items-center justify-center gap-4 group hover:scale-105 transition-all text-center"><span class="material-symbols-outlined text-primary text-3xl md:text-4xl group-hover:text-secondary transition-colors">present_to_all</span><h4 class="font-bold text-[10px] md:text-xs uppercase tracking-widest text-primary">PowerPoint Presentations</h4></div>
+<div class="p-6 md:p-8 rounded-3xl glass-card flex flex-col items-center justify-center gap-4 group hover:scale-105 transition-all text-center"><span class="material-symbols-outlined text-primary text-3xl md:text-4xl group-hover:text-secondary transition-colors">forum</span><h4 class="font-bold text-[10px] md:text-xs uppercase tracking-widest text-primary">Communication</h4></div>
+<div class="p-6 md:p-8 rounded-3xl glass-card flex flex-col items-center justify-center gap-4 group hover:scale-105 transition-all text-center"><span class="material-symbols-outlined text-primary text-3xl md:text-4xl group-hover:text-secondary transition-colors">groups</span><h4 class="font-bold text-[10px] md:text-xs uppercase tracking-widest text-primary">Teamwork</h4></div>
+<div class="p-6 md:p-8 rounded-3xl glass-card flex flex-col items-center justify-center gap-4 group hover:scale-105 transition-all text-center"><span class="material-symbols-outlined text-primary text-3xl md:text-4xl group-hover:text-secondary transition-colors">psychology</span><h4 class="font-bold text-[10px] md:text-xs uppercase tracking-widest text-primary">Problem Solving</h4></div>
+</div>
+</div>
+</section>
+<!-- Experience Section -->
+<section class="py-section-gap px-margin-mobile md:px-margin-desktop" id="experience">
+<div class="max-w-[1400px] mx-auto px-4">
+<div class="flex flex-col lg:flex-row justify-between lg:items-end mb-12 md:mb-20 reveal gap-6">
+<div>
+<h2 class="font-display text-display-md text-primary font-bold tracking-tighter mb-4">The <span class="italic font-normal">Journey</span></h2>
+<p class="text-on-surface-variant font-medium tracking-[0.2em] uppercase text-[10px] md:text-xs">Professional Path &amp; Personal Commitment</p>
+</div>
+<div class="hidden lg:block h-0.5 flex-grow mx-12 mb-4 bg-primary/10"></div>
+</div>
+<div class="space-y-6 reveal">
+<!-- Fellowship Singer -->
+<div class="group p-6 md:p-12 rounded-3xl bg-primary/5 border-2 border-accent-gold/30 grid lg:grid-cols-12 gap-6 lg:gap-8 items-center relative overflow-hidden shadow-xl">
+<div class="absolute left-0 top-0 h-full w-2 bg-accent-gold"></div>
+<div class="lg:col-span-5">
+<span class="text-xs font-bold uppercase tracking-widest text-secondary mb-2 block">Faith &amp; Fellowship Leadership</span>
+<h3 class="font-display text-2xl md:text-4xl font-bold text-primary group-hover:italic transition-all">Spiritual Service &amp; Leadership</h3>
+</div>
+<div class="lg:col-span-7">
+<p class="text-on-surface-variant text-base md:text-xl font-light leading-relaxed">Active in school fellowship, church fellowship, and High School Protestant fellowship. I serve through preaching and singing as my primary roles, while also contributing to various other service activities across these communities.</p>
+</div>
+</div>
+<!-- Digital Creator -->
+<div class="group p-6 md:p-10 rounded-3xl glass-card grid lg:grid-cols-12 gap-4 lg:gap-6 items-start relative overflow-hidden">
+<div class="absolute left-0 top-0 h-full w-1.5 bg-primary transform -translate-x-full group-hover:translate-x-0 transition-transform duration-500"></div>
+<div class="lg:col-span-4">
+<span class="text-[10px] font-bold uppercase tracking-widest text-secondary mb-1 block">Ongoing</span>
+<h3 class="font-display text-xl md:text-3xl font-bold text-primary group-hover:italic transition-all">Digital Creator</h3>
+</div>
+<div class="lg:col-span-8">
+<p class="text-on-surface-variant text-base md:text-lg font-light leading-relaxed">Developing high-impact visual assets and multimedia for international clients, merging technical design excellence with modern aesthetic trends.</p>
+</div>
+</div>
+<!-- English Educator -->
+<div class="group p-6 md:p-10 rounded-3xl glass-card grid lg:grid-cols-12 gap-4 lg:gap-6 items-start relative overflow-hidden">
+<div class="absolute left-0 top-0 h-full w-1.5 bg-accent-gold transform -translate-x-full group-hover:translate-x-0 transition-transform duration-500"></div>
+<div class="lg:col-span-4">
+<span class="text-[10px] font-bold uppercase tracking-widest text-primary mb-1 block">Professional</span>
+<h3 class="font-display text-xl md:text-3xl font-bold text-primary group-hover:italic transition-all">English Educator</h3>
+</div>
+<div class="lg:col-span-8">
+<p class="text-on-surface-variant text-base md:text-lg font-light leading-relaxed">Providing global English instruction focused on grammar mastery and conversational fluency, tailored to each learner's unique background.</p>
+</div>
+</div>
+<!-- Web Development -->
+<div class="group p-6 md:p-10 rounded-3xl glass-card grid lg:grid-cols-12 gap-4 lg:gap-6 items-start relative overflow-hidden">
+<div class="absolute left-0 top-0 h-full w-1.5 bg-primary transform -translate-x-full group-hover:translate-x-0 transition-transform duration-500"></div>
+<div class="lg:col-span-4">
+<span class="text-[10px] font-bold uppercase tracking-widest text-secondary mb-1 block">Technical</span>
+<h3 class="font-display text-xl md:text-3xl font-bold text-primary group-hover:italic transition-all">Freelance Web Dev</h3>
+</div>
+<div class="lg:col-span-8">
+<p class="text-on-surface-variant text-base md:text-lg font-light leading-relaxed">Building performance-driven, user-centric websites. I manage the full lifecycle from UI design to responsive implementation and accessibility.</p>
+</div>
+</div>
+<!-- Church Vocalist -->
+<div class="group p-6 md:p-10 rounded-3xl glass-card grid lg:grid-cols-12 gap-4 lg:gap-6 items-start relative overflow-hidden">
+<div class="absolute left-0 top-0 h-full w-1.5 bg-accent-gold transform -translate-x-full group-hover:translate-x-0 transition-transform duration-500"></div>
+<div class="lg:col-span-4">
+<span class="text-[10px] font-bold uppercase tracking-widest text-primary mb-1 block">Community</span>
+<h3 class="font-display text-xl md:text-3xl font-bold text-primary group-hover:italic transition-all">Church Vocalist</h3>
+</div>
+<div class="lg:col-span-8">
+<p class="text-on-surface-variant text-base md:text-lg font-light leading-relaxed">Serving through vocal leadership and harmony. This role combines musical talent with community service, fostering spiritual growth and inspiration.</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Education & Languages -->
+<section class="py-section-gap px-margin-mobile md:px-margin-desktop">
+<div class="max-w-[1400px] mx-auto px-4 grid md:grid-cols-2 gap-6 md:gap-8">
+<!-- Education Card -->
+<div class="reveal p-8 md:p-12 rounded-3xl glass-card flex flex-col justify-between group h-full">
+<div class="flex items-center gap-4 md:gap-6 mb-8 md:mb-12">
+<span class="material-symbols-outlined text-primary text-4xl md:text-5xl group-hover:scale-110 transition-transform">history_edu</span>
+<h2 class="font-display text-2xl md:text-4xl font-bold text-primary tracking-tighter">Academic Roots</h2>
+</div>
+<div class="space-y-2">
+<h3 class="text-xl md:text-2xl font-bold italic text-primary">High School Student</h3>
+<p class="text-on-surface-variant font-medium tracking-widest uppercase text-[10px] md:text-xs">Dessie, Ethiopia • Pursuing Excellence</p>
+</div>
+</div>
+<!-- Languages Card -->
+<div class="reveal p-8 md:p-12 rounded-3xl glass-card flex flex-col justify-between group h-full" style="transition-delay: 0.2s">
+<div class="flex items-center gap-4 md:gap-6 mb-8 md:mb-12">
+<span class="material-symbols-outlined text-primary text-4xl md:text-5xl group-hover:scale-110 transition-transform">translate</span>
+<h2 class="font-display text-2xl md:text-4xl font-bold text-primary tracking-tighter">Linguistic Reach</h2>
+</div>
+<div class="space-y-6">
+<div class="flex justify-between items-center pb-4 border-b border-primary/10">
+<span class="text-lg md:text-xl font-medium">Amharic</span>
+<span class="px-3 md:px-4 py-1 bg-primary text-white rounded-full text-[10px] font-bold uppercase tracking-widest">NATIVE</span>
+</div>
+<div class="flex justify-between items-center">
+<span class="text-lg md:text-xl font-medium">English</span>
+<span class="px-3 md:px-4 py-1 bg-accent-gold text-primary rounded-full text-[10px] font-bold uppercase tracking-widest">FLUENT</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Contact Section -->
+<section class="py-section-gap px-margin-mobile md:px-margin-desktop text-center" id="contact">
+<div class="max-w-[1400px] mx-auto px-4 reveal">
+<div class="mb-12 md:mb-20">
+<h2 class="font-display text-display-md text-primary font-bold tracking-tighter mb-6 md:mb-8 italic">Let’s <span class="text-accent-gold">Connect</span></h2>
+<p class="text-lg md:text-xl text-on-surface-variant max-w-2xl mx-auto font-light px-4">Based in <span class="font-bold">Dessie, Ethiopia</span>. Available for collaborative projects, professional tutoring, or creative conversations.</p>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-8 max-w-4xl mx-auto">
+<a class="p-8 md:p-10 rounded-3xl glass-card group hover:bg-primary transition-all duration-500 flex flex-col items-center gap-4 w-full" href="mailto:shalomeyasu78@gmail.com">
+<span class="material-symbols-outlined text-4xl text-primary group-hover:text-accent-gold transition-colors">mail</span>
+<div class="flex flex-col gap-1">
+<span class="text-[10px] font-bold uppercase tracking-widest group-hover:text-white transition-colors">Email</span>
+<span class="text-xs sm:text-sm font-medium group-hover:text-white/80 transition-colors break-all">shalomeyasu78@gmail.com</span>
+</div>
+</a>
+<a class="p-8 md:p-10 rounded-3xl glass-card group hover:bg-primary transition-all duration-500 flex flex-col items-center gap-4 w-full" href="tel:+251923183805">
+<span class="material-symbols-outlined text-4xl text-primary group-hover:text-accent-gold transition-colors">call</span>
+<div class="flex flex-col gap-1">
+<span class="text-[10px] font-bold uppercase tracking-widest group-hover:text-white transition-colors">Phone</span>
+<span class="text-xs sm:text-sm font-medium group-hover:text-white/80 transition-colors">+251 923 183 805</span>
+</div>
+</a>
+<a class="p-8 md:p-10 rounded-3xl glass-card group hover:bg-primary transition-all duration-500 flex flex-col items-center gap-4 w-full" href="https://t.me/Certified_chill_gurl">
+<span class="material-symbols-outlined text-4xl text-primary group-hover:text-accent-gold transition-colors">send</span>
+<div class="flex flex-col gap-1">
+<span class="text-[10px] font-bold uppercase tracking-widest group-hover:text-white transition-colors">Telegram</span>
+<span class="text-xs sm:text-sm font-medium group-hover:text-white/80 transition-colors">@Certified_chill_gurl</span>
+</div>
+</a>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="py-12 md:py-20 px-margin-mobile md:px-margin-desktop border-t border-primary/5 bg-white/40">
+<div class="max-w-[1400px] mx-auto px-4 flex flex-col md:flex-row items-center gap-8 md:gap-12 text-center md:text-left justify-between">
+<div class="space-y-4">
+<div class="flex items-center gap-3 justify-center md:justify-start">
+<div class="h-8 w-8 md:h-10 md:w-10 overflow-hidden flex items-center justify-center">
+<img alt="SE Logo" class="h-full w-full object-contain mix-blend-multiply opacity-80 logo-clip" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDucoegpKRnJ2F42j_YrfhgeKc-Z2MfGB9bHTR0Ob72YovDvNEl_3gU7JRlCnjAJ9b8mZaQKP3RCJHivoqtv1JZik6okXRqfF2Mf00d45A-bYNp6yxiXhc6gHXlO5saM-pytBoCXjSNSSbuFxO4LW7MBksqpCnQSy4G8JNSoh_mSIC1RVPO890SeoY-mKONdOSOUfORxx-h3M_ejIWJ7G6_RVeJI-xVp5cFNFaYIGXRxagBLObjhZ84V3krW2QJYscblLwMJP3Qyyg"/>
+</div>
+<span class="font-display text-xl md:text-2xl font-bold text-primary tracking-tighter">Shalom Eyasu</span>
+</div>
+<p class="text-xs md:text-sm text-on-surface-variant font-medium italic">Learning, creating, and serving with excellence.</p>
+</div>
+<div class="space-y-2">
+<p class="text-[10px] font-bold uppercase tracking-widest opacity-40">© 2026 Shalom Eyasu. All rights reserved.</p>
+<p class="text-[10px] font-bold uppercase tracking-widest opacity-20">Based in Dessie, Ethiopia</p>
+</div>
+</div>
+</footer>
+<script>
+    // Preloader Logic
+    window.addEventListener('load', () => {
+        const fill = document.getElementById('load-fill');
+        const text = document.getElementById('load-text');
+        let progress = 0;
+        
+        // Simulation for visual effect
+        const interval = setInterval(() => {
+            progress += Math.random() * 8 + 2; // Slower, smoother loading increment
+            if (progress > 100) progress = 100;
+            
+            fill.style.width = `${progress}%`;
+            text.innerText = `${Math.floor(progress)}%`;
+            
+            if (progress === 100) {
+                clearInterval(interval);
+                setTimeout(() => {
+                    document.body.classList.add('loaded');
+                }, 600);
+            }
+        }, 100);
+    });
+
+    // WebGL Background Logic
+    const canvas = document.getElementById('shader-canvas');
+    const gl = canvas.getContext('webgl');
+
+    if (gl) {
+        const vertexShaderSource = `
+            attribute vec2 position;
+            varying vec2 v_texCoord;
+            void main() {
+                v_texCoord = position * 0.5 + 0.5;
+                gl_Position = vec4(position, 0.0, 1.0);
+            }
+        `;
+
+        const fragmentShaderSource = `
+            precision highp float;
+            uniform float u_time;
+            uniform vec2 u_resolution;
+            varying vec2 v_texCoord;
+
+            void main() {
+                vec2 uv = v_texCoord;
+                float t = u_time * 0.15;
+                vec2 p = uv * 2.0 - 1.0;
+                p.x *= u_resolution.x / u_resolution.y;
+                
+                float wave = sin(p.x * 1.5 + t) * 0.3 + sin(p.y * 1.2 - t * 0.4) * 0.4;
+                float wave2 = cos(p.y * 2.5 + t * 0.2) * 0.2 + cos(p.x * 2.0 - t * 0.7) * 0.3;
+                
+                vec3 color1 = vec3(0.0, 0.14, 0.435); 
+                vec3 color2 = vec3(0.97, 0.98, 1.0);  
+                vec3 accent = vec3(0.99, 0.84, 0.35); 
+                
+                float mixFactor = clamp(wave + wave2 + 0.75, 0.0, 1.0);
+                vec3 finalColor = mix(color1, color2, mixFactor);
+                
+                float shm = smoothstep(0.48, 0.52, sin(uv.y * 12.0 + uv.x * 8.0 + t * 1.5));
+                finalColor = mix(finalColor, accent, shm * 0.03);
+                
+                gl_FragColor = vec4(finalColor, 0.07);
+            }
+        `;
+
+        function createShader(gl, type, source) {
+            const shader = gl.createShader(type);
+            gl.shaderSource(shader, source);
+            gl.compileShader(shader);
+            return shader;
+        }
+
+        const program = gl.createProgram();
+        gl.attachShader(program, createShader(gl, gl.VERTEX_SHADER, vertexShaderSource));
+        gl.attachShader(program, createShader(gl, gl.FRAGMENT_SHADER, fragmentShaderSource));
+        gl.linkProgram(program);
+
+        const positionBuffer = gl.createBuffer();
+        gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
+        gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, -1, 1, -1, -1, 1, 1, 1]), gl.STATIC_DRAW);
+
+        const positionLocation = gl.getAttribLocation(program, 'position');
+        const timeLocation = gl.getUniformLocation(program, 'u_time');
+        const resolutionLocation = gl.getUniformLocation(program, 'u_resolution');
+
+        function render(time) {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            gl.viewport(0, 0, canvas.width, canvas.height);
+            gl.useProgram(program);
+            gl.enableVertexAttribArray(positionLocation);
+            gl.vertexAttribPointer(positionLocation, 2, gl.FLOAT, false, 0, 0);
+            gl.uniform1f(timeLocation, time * 0.001);
+            gl.uniform2f(resolutionLocation, canvas.width, canvas.height);
+            gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+            requestAnimationFrame(render);
+        }
+        requestAnimationFrame(render);
+    }
+
+    // Intersection Observer for Reveal animations
+    const reveals = document.querySelectorAll('.reveal');
+    const observerOptions = { threshold: 0.1, rootMargin: '0px 0px -50px 0px' };
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('active');
+            }
+        });
+    }, observerOptions);
+
+    reveals.forEach(reveal => observer.observe(reveal));
+
+    // Scroll progress bar
+    window.addEventListener('scroll', () => {
+        const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+        const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+        const scrolled = (winScroll / height) * 100;
+        const progressBar = document.getElementById('progress-bar');
+        if (progressBar) progressBar.style.width = scrolled + '%';
+    });
+
+    // Smooth scrolling for anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            const targetId = this.getAttribute('href');
+            if (targetId === '#') return;
+            
+            e.preventDefault();
+            const targetElement = document.querySelector(targetId);
+            if (targetElement) {
+                const offset = 80;
+                const bodyRect = document.body.getBoundingClientRect().top;
+                const elementRect = targetElement.getBoundingClientRect().top;
+                const elementPosition = elementRect - bodyRect;
+                const offsetPosition = elementPosition - offset;
+
+                window.scrollTo({
+                    top: offsetPosition,
+                    behavior: 'smooth'
+                });
+            }
+        });
+    });
+
+    // Auto-close mobile menu on desktop resize
+    window.addEventListener('resize', () => {
+        if (window.innerWidth > 768) {
+            const mobileMenu = document.getElementById('mobile-menu');
+            if (mobileMenu) mobileMenu.classList.add('hidden');
+        }
+    });
+</script>
+</body></html>
